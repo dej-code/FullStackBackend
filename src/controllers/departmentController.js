@@ -16,8 +16,9 @@ const getDepartments = async (req, res) => {
 
 const getDepartmentById = async (req, res) => {
   try {
+    const { id } = req.params;
     const department = await prisma.department.findUnique({
-      where: { id: req.params.id },
+      where: { id: +id },
       include: { faculties: true },
     });
     if (!department) {

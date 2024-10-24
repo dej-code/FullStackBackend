@@ -9,8 +9,13 @@ Content-Type: application/json
   "password": "fodtyfeqwjobar"
 }
 
-### View list of all departments
+### Guests can View list of all departments
 GET {{host}}/departments
+
+###Guests can view specific details of a individual department
+GET {{host}}/departments/3
+
+
 
 
 ### login existing user
@@ -26,7 +31,7 @@ Content-Type: application/json
 
 
 
-### add a new department
+### logged-in user can add a new department
 @token = {{login.response.body.token}}
 POST {{host}}/departments
 Authorization: Bearer {{token}}
@@ -39,7 +44,7 @@ Content-Type: application/json
 }
 
 
-### edit existing department
+### logged-in user can edit existing department
 PUT {{host}}/departments/3
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -50,6 +55,6 @@ Content-Type: application/json
   "contactInfo": "559-764-2375"
 }
 
-###delete existing deparment
+###logged-in user can delete existing deparment
 DELETE {{host}}/departments/2
 Authorization: Bearer {{token}}
