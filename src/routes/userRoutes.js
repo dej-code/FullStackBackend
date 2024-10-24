@@ -9,7 +9,6 @@ const {
 const { body } = require("express-validator");
 const {
   createToken,
-  authenticateToken,
 } = require("../middleware/authMiddleware");
 const validateInputs = require("../middleware/validationMiddleware");
 

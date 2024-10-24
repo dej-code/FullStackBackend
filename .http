@@ -15,9 +15,6 @@ GET {{host}}/departments
 ###Guests can view specific details of a individual department
 GET {{host}}/departments/3
 
-
-
-
 ### login existing user
 # @name login
 POST {{host}}/users/login
@@ -28,8 +25,6 @@ Content-Type: application/json
   "email": "f3kgrghlo@btr.baz",
   "password": "fodtyfeqwjobar"
 }
-
-
 
 ### logged-in user can add a new department
 @token = {{login.response.body.token}}
@@ -57,4 +52,50 @@ Content-Type: application/json
 
 ###logged-in user can delete existing deparment
 DELETE {{host}}/departments/2
+Authorization: Bearer {{token}}
+
+
+Faculty Requests
+
+
+### can see list of all faculty members
+GET {{host}}/faculties
+
+
+### can see specific details of a faculty member
+GET {{host}}/faculties/2
+
+
+
+### logged in user can add a faculty member.
+
+POST {{host}}/faculties
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Professor Oak",
+  "bio": "Cool Professor",
+  "email": "professoroak@gmail.com",
+  "contactInfo": "5596423375",
+  "departmentId": 1
+}
+
+### logged in user can update an existing faculty member.
+PUT {{host}}/faculties/2
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Professor Oak v2",
+  "bio": "Cooler Professor",
+  "email": "professoroakv2@gmail.com",
+  "contactInfo": "5596423375",
+  "departmentId": 1
+}
+
+
+
+###logged-in user can delete existing deparment
+DELETE {{host}}/faculties/3
 Authorization: Bearer {{token}}

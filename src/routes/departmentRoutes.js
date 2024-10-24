@@ -13,6 +13,6 @@ router.get("/", getDepartments);
 router.get("/:id", getDepartmentById);
 router.post("/", authenticateToken, createDepartment);
 router.put("/:id", authenticateToken, updateDepartment);
-router.delete("/:id", deleteDepartment);
+router.delete("/:id", authenticateToken, deleteDepartment);
 
 module.exports = router;
