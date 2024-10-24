@@ -5,8 +5,51 @@ POST {{host}}/users/register
 Content-Type: application/json
 
 {
-  "email": "f3klo@bthar.baz",
-  "password": "fodtyjobar"
+  "email": "f3kgrghlo@btr.baz",
+  "password": "fodtyfeqwjobar"
 }
 
-### Login
+### View list of all departments
+GET {{host}}/departments
+
+
+### login existing user
+# @name login
+POST {{host}}/users/login
+Content-Type: application/json
+
+
+{
+  "email": "f3kgrghlo@btr.baz",
+  "password": "fodtyfeqwjobar"
+}
+
+
+
+### add a new department
+@token = {{login.response.body.token}}
+POST {{host}}/departments
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Biology",
+  "description": "Biology Department",
+  "contactInfo": "5597642375"
+}
+
+
+### edit existing department
+PUT {{host}}/departments/3
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Biology",
+  "description": "Biology Department",
+  "contactInfo": "559-764-2375"
+}
+
+###delete existing deparment
+DELETE {{host}}/departments/2
+Authorization: Bearer {{token}}

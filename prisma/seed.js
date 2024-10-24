@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcrypt");
 const prisma = new PrismaClient();
 const { faker } = require("@faker-js/faker");
-async function seed(facultyMember = 10, Department = 1) {
+async function seed(facultyMember = 5, Department = 1) {
   const hashedPassword = await bcrypt.hash("userpassword", 10);
 
   for (let i = 0; i < facultyMember; i++) {
@@ -14,7 +14,7 @@ async function seed(facultyMember = 10, Department = 1) {
         contactInfo: faker.phone.number(),
       },
     });
-
+    const faculties = [ ]
     const departmentData = [];
     for (let j = 0; j < Department; j++) {
       departmentData.push({

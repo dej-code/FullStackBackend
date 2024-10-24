@@ -15,20 +15,19 @@ const validateInputs = require("../middleware/validationMiddleware");
 
 const router = express.Router();
 
-router.post(
-  "/login",
-  [
-    body("email").isEmail().withMessage("Please provide a valid email"),
-    body("password")
-      .isLength({ min: 6 })
-      .withMessage("Password must be at least 6 characters"),
-  ],
-  validateInputs,
-  loginUser
-);
-router.post("/register", async (req, res, next) => {
-  const { email, password, } = req.body;
+router.post("/login", async (req, res, next) => {
+  const { email, password } = req.body;
+  try {
+    const user = await prisma.user.login(email, password);
+    const token = createToken(user.id);
+    res.json({ token });
+  } catch (e) {
+    next(e);
+  }
+});
 
+router.post("/register", async (req, res, next) => {
+  const { email, password } = req.body;
 
   try {
     const user = await prisma.user.register(email, password);
@@ -38,6 +37,5 @@ router.post("/register", async (req, res, next) => {
     next(e);
   }
 });
-router.get("/:id", authenticateToken, getUserById);
 
 module.exports = router;
