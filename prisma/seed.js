@@ -1,44 +1,31 @@
 const { PrismaClient } = require("@prisma/client");
-const bcrypt = require("bcrypt");
 const prisma = new PrismaClient();
 const { faker } = require("@faker-js/faker");
-async function seed(facultyMember = 10, Department = 1) {
-  const hashedPassword = await bcrypt.hash("userpassword", 10);
-
+async function seed(facultyMember = 50, Department = 10) {
+  for (let j = 0; j < Department; j++) {
+    await prisma.department.createMany({
+      data: {
+        name: faker.commerce.department(),
+        description: faker.lorem.paragraph(),
+        contactInfo: faker.phone.number(),
+      },
+    });
+  }
+  const faculty = [];
   for (let i = 0; i < facultyMember; i++) {
-    const faculty = await prisma.faculty.create({
+    await prisma.faculty.createMany({
       data: {
         name: faker.person.fullName(),
         bio: faker.lorem.paragraph(),
         email: faker.internet.email(),
         contactInfo: faker.phone.number(),
+        departmentId: Math.floor(Math.random() * Department) + 1,
       },
     });
 
-    const departmentData = [];
-    for (let j = 0; j < Department; j++) {
-      departmentData.push({
-        name: faker.commerce.department(),
-        description: faker.lorem.paragraph(),
-        contactInfo: faker.phone.number(),
-      });
-    }
-
-    await prisma.department.createMany({
-      data: departmentData,
-    });
+    console.log("Seeding completed");
   }
-
-  await prisma.user.create({
-    data: {
-      email: "user@example.com",
-      passwordHash: hashedPassword,
-    },
-  });
-
-  console.log("Seeding completed");
 }
-
 seed()
   .catch((e) => {
     console.error(e);
